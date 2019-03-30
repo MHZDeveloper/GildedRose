@@ -30,12 +30,12 @@ class GildedRoseTest {
     @Test
     fun update_item_with_zero_SellIn() {
         //given
-        val items = arrayOf(Item("+5 Dexterity Vest", -1, 10))
+        val items = arrayOf(Item("+5 Dexterity Vest", 0, 10))
         val app = GildedRose(items)
         //when
         app.updateQuality()
         //then
-        assertEquals(-2, app.items[0].sellIn)
+        assertEquals(-1, app.items[0].sellIn)
         assertEquals(8, app.items[0].quality)
     }
 
@@ -123,6 +123,29 @@ class GildedRoseTest {
         assertEquals(0, app.items[0].quality)
     }
 
-    //TODO conjured items test
+    @Test
+    fun update_Conjured_item_with_SellIn_less_than_0() {
+        //given
+        val items = arrayOf(Item("Conjured", 0, 40))
+        val app = GildedRose(items)
+        //when
+        app.updateQuality()
+        //then
+        assertEquals(-1, app.items[0].sellIn)
+        assertEquals(36, app.items[0].quality)
+    }
+
+
+    @Test
+    fun update_Conjured_item_with_SellIn_more_than_0() {
+        //given
+        val items = arrayOf(Item("Conjured", 5, 40))
+        val app = GildedRose(items)
+        //when
+        app.updateQuality()
+        //then
+        assertEquals(4, app.items[0].sellIn)
+        assertEquals(38, app.items[0].quality)
+    }
 
 }
